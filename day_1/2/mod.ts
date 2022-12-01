@@ -2,7 +2,7 @@ const text = Deno.readTextFileSync('input.txt');
 const textByLine = text.split('\n');
 
 let buffer = 0;
-const dict = [];
+const dict: number[] = [];
 
 for (const line of textByLine) {
   if (line === '') {
