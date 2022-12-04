@@ -13,34 +13,25 @@ for (const line of textByLine) {
   const rangeOneArray = [];
   const rangeTwoArray = [];
 
-  for (let i = rangeOne[0]; i <= rangeOne[1] + 1; i++) {
+  for (let i = rangeOne[0]; i <= rangeOne[1]; i++) {
     rangeOneArray.push(i);
   }
 
-  for (let i = rangeTwo[0]; i <= rangeTwo[1] + 1; i++) {
+  for (let i = rangeTwo[0]; i <= rangeTwo[1]; i++) {
     rangeTwoArray.push(i);
   }
 
-  const isRangeOne = check(rangeOneArray, rangeTwoArray);
-  const isRangeTwo = check(rangeTwoArray, rangeOneArray);
+  let state = false;
 
-  if (isRangeOne || isRangeTwo) {
-    count++;
-  }
-}
-
-function check(rangeOne: number[], rangeTwo: number[]): boolean {
-  let state = true;
-
-  for (const i of rangeTwo) {
-    if (rangeOne.includes(i)) {
-      continue;
-    } else {
-      state = false
+  for (const i of rangeTwoArray) {
+    if (rangeOneArray.includes(i)) {
+      state = true;
     }
   }
 
-  return state;
+  if (state) {
+    count++;
+  }
 }
 
 console.log(count);
