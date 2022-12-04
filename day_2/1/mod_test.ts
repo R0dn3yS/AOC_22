@@ -6,18 +6,18 @@ let score = 0;
 const scoring: Record<string, { score: number, wins: string, equal: string }> = {
   A: {
     score: 2,
-    wins: "Y",
-    equal: "X"
+    wins: 'Y',
+    equal: 'X'
   },
   B: {
     score: 3,
-    wins: "Z",
-    equal: "Y"
+    wins: 'Z',
+    equal: 'Y'
   },
   C: {
     score: 1,
-    wins: "X",
-    equal: "Z"
+    wins: 'X',
+    equal: 'Z'
   },
 }
 

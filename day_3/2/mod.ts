@@ -1,5 +1,5 @@
-const text = Deno.readTextFileSync("../input.txt");
-const textByLine = text.split("\n");
+const text = Deno.readTextFileSync('../input.txt');
+const textByLine = text.split('\n');
 
 const priorities = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
