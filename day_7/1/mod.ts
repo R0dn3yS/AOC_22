@@ -21,7 +21,7 @@ for (let i = 0; i < input.length; i++) {
           break;
         } else {
           curDir += `/${args}`;
-          Deno.mkdir(curDir, { recursive: true });
+          await Deno.mkdir(curDir, { recursive: true });
           lastLength = curDir.length - args.length - 1;
           break;
         }
@@ -37,7 +37,6 @@ for (let i = 0; i < input.length; i++) {
             break;
           } else {
             const line = input[i].split(' ');
-            console.log(line);
 
             switch (line[0]) {
               case 'dir': {
@@ -51,7 +50,7 @@ for (let i = 0; i < input.length; i++) {
               }
 
               default: {
-                await Deno.writeTextFileSync(`${curDir}/${line[1]}.tmp`, line[0]);
+                Deno.writeTextFileSync(`${curDir}/${line[1]}.tmp`, line[0]);
                 break;
               }
             }
