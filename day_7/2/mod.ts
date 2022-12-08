@@ -46,7 +46,6 @@ const exec = (line: string) => {
     const newDir = current.body.find((d) => d.name === dir);
     current = newDir as Directory;
   }
-
   ls = false;
 };
 
@@ -95,18 +94,14 @@ function dirSize(dir: Directory) {
   return size;
 }
 
-let total = 0;
-
-for (const d of root.body) {
-  if ('body' in d) {
-    dirSize(d);
-  }
-}
+const used = 70000000 - dirSize(root);
+const needed = 30000000 - used;
+let best = 70000000;
 
 for (const size of dirSizeMap.values()) {
-  if (size <= 100000) {
-    total += size;
+  if (needed <= size && size < best) {
+    best = size;
   }
 }
 
-console.log(total);
+console.log(best);
