@@ -6,7 +6,7 @@ const knots = new Array(len).fill(null).map(() => ({ x: 0, y: 0 }));
 const visited = new Set([`0,0`]);
 
 for (const [direction, count] of steps) {
-  for (let i = 0; i < +count; i++) {
+  for (let i = 0; i < count; i++) {
     if (direction === 'R') knots[0].x++;
     if (direction === 'L') knots[0].x--;
     if (direction === 'D') knots[0].y++;
