@@ -1,117 +1,27 @@
 const input = Deno.readTextFileSync('../input.txt').split('\n');
 
-const map = new Array(1000).fill(null).map((_) => new Array(1000).fill(' '));
+const len = 2;
+const steps = input.map(line => line.split(' '));
+const knots = new Array(len).fill(null).map(() => ({ x: 0, y: 0 }));
+const visited = new Set([`0,0`]);
 
-const headPos = [500, 500];
-const tailPos = [500, 500];
+for (const [direction, count] of steps) {
+  for (let i = 0; i < +count; i++) {
+    if (direction === 'R') knots[0].x++;
+    if (direction === 'L') knots[0].x--;
+    if (direction === 'D') knots[0].y++;
+    if (direction === 'U') knots[0].y--;
 
-map[tailPos[0]][tailPos[1]] = '#';
+    for (let j = 1; j < knots.length; j++) {
+      const [H, T] = [knots[j - 1], knots[j]];
 
-for (const command of input) {
-  const direction = command.split(' ')[0];
-  const amount = parseInt(command.split(' ')[1]);
-
-  switch (direction) {
-    case 'U': {
-      for (let a = 0; a < amount; a++) {
-        headPos[0]--;
-
-        if (!isTouching()) {
-          tailPos[0]--;
-          tailPos[1] = headPos[1];
-
-          map[tailPos[0]][tailPos[1]] = '#';
-        }
-
-        console.log(`\nHead: ${headPos}`);
-        console.log(`Tail: ${tailPos}`);
+      if (Math.abs(H.x - T.x) === 2 || Math.abs(H.y - T.y) === 2) {
+        T.x = H.x === T.x ? T.x : H.x > T.x ? T.x + 1 : T.x - 1;
+        T.y = H.y === T.y ? T.y : H.y > T.y ? T.y + 1 : T.y - 1;
       }
-
-      break;
     }
-
-    case 'D': {
-      for (let a = 0; a < amount; a++) {
-        headPos[0]++;
-
-        if (!isTouching()) {
-          tailPos[0]++;
-          tailPos[1] = headPos[1];
-
-          map[tailPos[0]][tailPos[1]] = '#';
-        }
-
-        console.log(`\nHead: ${headPos}`);
-        console.log(`Tail: ${tailPos}`);
-      }
-
-      break;
-    }
-
-    case 'L': {
-      for (let a = 0; a < amount; a++) {
-        headPos[1]--;
-
-        if (!isTouching()) {
-          tailPos[1]--;
-          tailPos[0] = headPos[0];
-
-          map[tailPos[0]][tailPos[1]] = '#';
-        }
-
-        console.log(`\nHead: ${headPos}`);
-        console.log(`Tail: ${tailPos}`);
-      }
-
-      break;
-    }
-
-    case 'R': {
-      for (let a = 0; a < amount; a++) {
-        headPos[1]++;
-
-        if (!isTouching()) {
-          tailPos[1]++;
-          tailPos[0] = headPos[0];
-
-          map[tailPos[0]][tailPos[1]] = '#';
-        }
-
-        console.log(`\nHead: ${headPos}`);
-        console.log(`Tail: ${tailPos}`);
-      }
-
-      break;
-    }
+    visited.add(`${knots[len - 1].x},${knots[len - 1].y}`);
   }
 }
 
-function isTouching(): boolean {
-  const x = tailPos[0];
-  const y = tailPos[1];
-
-  let touching = false;
-
-  if (x - 1 === headPos[0] && y - 1 === headPos[1]) touching = true;
-  if (x - 1 === headPos[0] && y === headPos[1]) touching = true;
-  if (x - 1 === headPos[0] && y + 1 === headPos[1]) touching = true;
-
-  if (x === headPos[0] && y - 1=== headPos[1]) touching = true;
-  if (x === headPos[0] && y === headPos[1]) touching = true;
-  if (x === headPos[0] && y + 1 === headPos[1]) touching = true;
-
-  if (x + 1 === headPos[0] && y - 1 === headPos[1]) touching = true;
-  if (x + 1 === headPos[0] && y === headPos[1]) touching = true;
-  if (x + 1 === headPos[0] && y + 1 === headPos[1]) touching = true;
-
-  return touching;
-}
-
-let count = 0;
-for (let x = 0; x < 1000; x++) {
-  for (let y = 0; y < 1000; y++) {
-    if (map[x][y] === '#') count++;
-  }
-}
-
-console.log(count);
+console.log(visited.size);
