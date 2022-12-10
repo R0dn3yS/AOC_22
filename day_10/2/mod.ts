@@ -5,7 +5,7 @@ const cpu = {
   x: 1,
   pc: 0,
   curRow: 0,
-  screen: new Array(6).fill(null).map((_) => new Array(40).fill(' ')),
+  screen: new Array(6).fill(null).map((_) => new Array(40).fill('⬛')),
 }
 
 async function execute(opcode: string) {
@@ -31,7 +31,7 @@ function drawScreen(spritePos: number[]) {
   const pos = (cpu.pc - 1) % 40;
 
   if (spritePos.includes(pos)) {
-    cpu.screen[cpu.curRow][pos] = '#'
+    cpu.screen[cpu.curRow][pos] = '⬜'
   }
 
   Deno.stdout.writeSync(new TextEncoder().encode(pos === 0 ? `\n${cpu.screen[cpu.curRow][pos]}` : `${cpu.screen[cpu.curRow][pos]}`));
