@@ -9,7 +9,7 @@ const cpu = {
 }
 
 async function execute(opcode: string) {
-  await delay(12);
+  await delay(50);
 
   if (opcode === 'noop') {
     cycle();
@@ -36,7 +36,7 @@ function drawScreen(spritePos: number[]) {
 
   Deno.stdout.writeSync(new TextEncoder().encode(pos === 0 ? `\n${cpu.screen[cpu.curRow][pos]}` : `${cpu.screen[cpu.curRow][pos]}`));
   if (pos === 39) {
-    cpu.curRow++;
+    cpu.curRow === 5 ? cpu.curRow = 0 : cpu.curRow++;
   }
 }
 
